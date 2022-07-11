@@ -1,6 +1,15 @@
+import pool from "../config/connectDB";
+
+const getData = new Promise((resolve) => {
+    pool.execute("select * from user", (err, results, fileds) => {
+        resolve(results);
+    });
+});
+
 const Controller = {
-    home(req, res) {
-        return res.render("home");
+    async home(req, res) {
+        const data = await getData;
+        return res.render("home", { data: data });
     },
 };
 
